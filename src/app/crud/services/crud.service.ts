@@ -37,4 +37,9 @@ export class CRUDService {
     return this.httpClient.get<any>(url).pipe(map(data => data));
   }
 
+  loadUsers() {
+    const url = environment.API_Endpoint + 'all_users.php';
+    return this.httpClient.get(url).pipe(map(data => data));
+  }
+
 }

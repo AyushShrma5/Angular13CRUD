@@ -59,6 +59,15 @@
                 <span *ngIf="productForm.controls['price'].errors?.['maxlength']">Product price with in 500 char length</span>
               </div>
             </div>
+
+            <!-- <div class="mb-3">
+              <label for="product-file" class="form-label">Product Image</label>
+              <input formControlName="file" type="file" class="form-control" id="product-file"  (change)="onFileChange($event)">
+              
+              <img [src]="imageSrc" *ngIf="imageSrc" style="height: 300px; width:500px">
+          </div> -->
+
+            
             
             <button type="submit" class="btn btn-primary">{{ buttonText }}</button>
           </form>

@@ -31,7 +31,7 @@ export class ProductDetailsComponent implements OnInit {
   loadProductDetails(productId : any){
    
     this.crudService.loadProductInfo(productId).subscribe(res => {
-     
+     //console.log(res);
       this.productDetails = res
       
     })

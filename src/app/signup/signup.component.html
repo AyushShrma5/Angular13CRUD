@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-6 p-5">
+        <form [formGroup]="signupForm" (ngSubmit)="signupUser(signupForm.value)">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input formControlName="name" type="name" class="form-control" id="name"
+                [ngClass]="{
+                  'is-invalid' : signupForm.controls['name'].errors && signupForm.controls['name'].touched,
+                  'is-valid' : !signupForm.controls['name'].errors
+                }"
+                >
+                <div class="alert alert-danger" role="alert" 
+              *ngIf="signupForm.controls['name'].errors && signupForm.controls['name'].touched">
+                <span *ngIf="signupForm.controls['name'].errors?.['required']">Name is Required</span>
+                <span *ngIf="signupForm.controls['name'].errors?.['minlength']">Name minimum length should be 3 char </span>
+                <span *ngIf="signupForm.controls['name'].errors?.['maxlength']">Name should be in 30 char length</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input formControlName="email" 
+              type="email" 
+              class="form-control"
+              id="email"
+              [ngClass]="{
+                'is-invalid' : signupForm.controls['email'].errors && signupForm.controls['email'].touched,
+                'is-valid' : !signupForm.controls['email'].errors
+              }"
+              >
+              <div class="alert alert-danger" role="alert" 
+              *ngIf="signupForm.controls['email'].errors && signupForm.controls['email'].touched">
+                <span *ngIf="signupForm.controls['email'].errors?.['required']">Email is Required</span>
+                <span *ngIf="signupForm.controls['email'].errors?.['pattern']">Email Pattern not valid</span>
+                <span *ngIf="signupForm.controls['email'].errors?.['maxlength']">Email should be in 50 char length</span>
+                <span  *ngIf="signupForm.controls['email'].errors?.['uniqueEmail'] ">Confirm paasword should matched with password</span>
+              </div>
+
+            </div>
+            
+            <div class="mb-3">
+                <label for="mobile" class="form-label">Mobile</label>
+                <input formControlName="mobile" type="text" class="form-control" id="mobile"
+                [ngClass]="{
+                  'is-invalid' : signupForm.controls['mobile'].errors && signupForm.controls['mobile'].touched,
+                  'is-valid' : !signupForm.controls['mobile'].errors
+                }"
+                >
+                <div class="alert alert-danger" role="alert" 
+              *ngIf="signupForm.controls['mobile'].errors && signupForm.controls['mobile'].touched">
+                <span *ngIf="signupForm.controls['mobile'].errors?.['required']">Mobile is Required</span>
+                <span *ngIf="signupForm.controls['mobile'].errors?.['pattern']">Please enter valid mobile number</span>
+                <span *ngIf="signupForm.controls['mobile'].errors?.['minlength']">Mobile minimum length should be 10 char </span>
+                <span *ngIf="signupForm.controls['mobile'].errors?.['maxlength']">Mobile should be in 10 char length</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input formControlName="password" type="password" class="form-control" id="password"
+                [ngClass]="{
+                  'is-invalid' : signupForm.controls['password'].errors && signupForm.controls['password'].touched,
+                  'is-valid' : !signupForm.controls['password'].errors
+                }"
+                >
+                <div class="alert alert-danger" role="alert" 
+              *ngIf="signupForm.controls['password'].errors && signupForm.controls['password'].touched">
+                <span *ngIf="signupForm.controls['password'].errors?.['required']">Password is Required</span>
+                <span *ngIf="signupForm.controls['password'].errors?.['minlength']">Password minimum length should be 3 char </span>
+                <span *ngIf="signupForm.controls['password'].errors?.['maxlength']">Password should be in 8 char length</span>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="password" class="form-label">Confirm Password</label>
+              <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword"
+              [ngClass]="{
+                'is-invalid' : signupForm.controls['confirmPassword'].errors && signupForm.controls['confirmPassword'].touched,
+                'is-valid' : !signupForm.controls['confirmPassword'].errors
+              }"
+              >
+              <div class="alert alert-danger" role="alert" 
+            *ngIf="signupForm.controls['confirmPassword'].errors && signupForm.controls['confirmPassword'].touched">
+              <span *ngIf="signupForm.controls['confirmPassword'].errors?.['required']">Password is Required</span>
+              <span *ngIf="signupForm.controls['confirmPassword'].errors?.['minlength']">Password minimum length should be 3 char </span>
+              <span *ngIf="signupForm.controls['confirmPassword'].errors?.['maxlength']">Password should be in 8 char length</span>
+              <span  *ngIf="signupForm.controls['confirmPassword'].errors?.['mustMatch'] ">Confirm paasword should matched with password</span>
+            </div>
+          </div>
+          
+            <button type="submit" class="btn btn-primary">Sign UP</button>
+          </form>
+    </div>
+</div>

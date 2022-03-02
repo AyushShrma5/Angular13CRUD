@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CRUDService } from '../services/crud.service';
+import { HttpClient } from '@angular/common/http';
+declare const Swal: any;
 
 @Component({
   selector: 'app-product-form',
@@ -13,12 +15,14 @@ export class ProductFormComponent implements OnInit {
  productForm: FormGroup
  productId: any
  buttonText = 'Create product';
+ imageSrc: string = '';
 
   constructor(
       private crudService: CRUDService, 
       private formBuilder : FormBuilder, 
       private router: Router, 
-      private activatedRoute : ActivatedRoute
+      private activatedRoute : ActivatedRoute,
+      private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -51,7 +55,9 @@ export class ProductFormComponent implements OnInit {
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(8)])
-      ]
+      ],
+      'file': ['']
+      
     });
   }
 
@@ -62,22 +68,51 @@ export class ProductFormComponent implements OnInit {
     formData.append('name', values.name);
     formData.append('description', values.description);
     formData.append('price', values.price);
+    //formData.append('file', values.file);
 
     if(this.productId){
       
       formData.append('id', this.productId);
       this.crudService.updateProductDetails(formData).subscribe(res => {
         if(res.result === 'success'){
-          this.navigateTo('/crud/product-list')
+          Swal.fire({
+            title: 'Product Updated Successfully',            
+            confirmButtonText: 'Ok',
+          }).then((result:any) => {           
+            if (result.isConfirmed) {
+              this.navigateTo('/crud/product-list')
+            }
+          })
+          //this.navigateTo('/crud/product-list')
         }
       })
     }else{
       
       this.crudService.createProduct(formData).subscribe(res => {
         if(res.result === 'success'){
-          this.navigateTo('/crud/product-list')
+          Swal.fire({
+            title: 'Product Created Successfully',            
+            confirmButtonText: 'Ok',
+          }).then((result:any) => {           
+            if (result.isConfirmed) {
+              this.navigateTo('/crud/product-list')
+            }
+          })
+          //this.navigateTo('/crud/product-list')
         }
       });
+
+      // const formDataImage = new FormData();
+      // formDataImage.append('file', values.imageSrc);
+      // console.log('ayush',formDataImage);
+      //formDataImage.append('file', this.productForm.get('fileSource')?.value);
+     
+      // this.http.post('http://localhost/web_api/upload.php', formData)
+      // .subscribe(res => {
+      //   console.log(res);
+      //   alert('Uploaded Successfully.');
+      // })
+
     }
 
   }
@@ -91,6 +126,31 @@ export class ProductFormComponent implements OnInit {
       this.productId = res.p_id;
       
     })
+  }
+
+  onFileChange(event:any) {
+    //  const reader = new FileReader();
+    
+    // if(event.target.files && event.target.files.length) {
+      
+    //   const [file] = event.target.files;
+    //   reader.readAsDataURL(file);
+    
+    //   reader.onload = () => {   
+    //     this.imageSrc = reader.result as string;
+    //   };
+
+    //   this.productForm.patchValue({
+    //     fileSource: file
+    //   });
+   
+    // }
+
+    const file = event.target.files ?  event.target.files[0] : '';
+    console.log(file);
+    // this.productForm.patchValue({
+    //       file: file
+    // });
   }
 
   navigateTo(route: any) {
